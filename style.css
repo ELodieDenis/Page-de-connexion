@@ -56,7 +56,7 @@ nav{
 
 }
 
-button{
+.btn_open_login{
     height: 40px;
     margin: 15px;
     border: 2px solid #F5F5F5;
@@ -67,33 +67,311 @@ button{
     font-size: large;
 }
 
-button:hover{
+.btn_open_login:hover{
     cursor: pointer;
     color: #002B5B;
     background-color: #F5F5F5;
     border: 2px solid #002B5B;
 }
 
-/* Permettre de mettre un effet de glassmorphism au clique sur le bouton de connection */
-/* .overlay {
+/* Existing account login */
+.overlay_login {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(2px);  
-    display: none;  
-    z-index: 999;   
-    transition: opacity 0.5s ease; 
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-.overlay.active {
-    display: block;
-    opacity: 1;
-} */
+.div_btn_close_login{
+    display: flex;
+    justify-content: end;
+}
 
+.btn_close_login {
+    display: flex;
+    justify-content: end;
+    height: 40px;
+    border: 2px solid #F5F5F5;
+    border-radius: 5px; 
+    color: #F5F5F5;
+    background-color: #002B5B;
+    padding: 5px;
+    font-size: large;
+    border-radius: 0px 15px 0px 15px;
+    color: white;
+    width: 40px;
+}
 
+.btn_close_login:hover{
+    background-color: red;
+    cursor: pointer;
+}
+  
+.login_modal {
+    background: white;
+    border-radius: 12px;
+    width: 400px;
+    height: 350px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+}
+  
+input {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.div_password {
+    position: relative;
+    width: 400px; 
+}
+  
+.div_password input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px; 
+    font-size: 16px;
+    box-sizing: border-box;
+}
+  
+.div_password .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+  
+.div_password .toggle_password img {
+    width: 20px;
+    height: 20px;
+}
+  
+.div_password button {
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+  
+.div_password img {
+    width: 20px; 
+    height: auto;
+}
+
+.checkbox{
+    cursor: pointer;
+}
+
+.btn_connection{
+    height: 40px;
+    border: 2px solid #F5F5F5;
+    border-radius: 5px;
+    color: #F5F5F5;
+    background-color: #002B5B;
+    padding: 5px;
+    font-size: large;
+}
+
+.btn_connection:hover{
+    cursor: pointer;
+    color: #002B5B;
+    background-color: #F5F5F5;
+    border: 2px solid #002B5B;
+}
+
+.create_account{
+    font-size: small;
+}
+
+.a_create_account{
+    border: none;
+    cursor: pointer;
+    background: #FFFFFF;
+    text-decoration: underline;
+}
+
+.a_create_account:hover{
+    color: #002B5B;
+}
+
+/* Create new account */
+.overlay_create_account{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.div_btn_close_login_create_account{
+    display: flex;
+    justify-content: end;
+}
+
+.btn_close_login_create_account {
+    display: flex;
+    justify-content: end;
+    height: 40px;
+    border: 2px solid #F5F5F5;
+    border-radius: 5px; 
+    color: #F5F5F5;
+    background-color: #002B5B;
+    padding: 5px;
+    font-size: large;
+    border-radius: 0px 15px 0px 15px;
+    color: white;
+    width: 40px;
+}
+
+.btn_close_login_create_account:hover{
+    background-color: red;
+    cursor: pointer;
+}
+
+.account_modal {
+    background: white;
+    border-radius: 12px;
+    width: 400px;
+    height: 480px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.div_password_create_account
+.toggle_password_create_account {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.div_password_create_account {
+    position: relative;
+    width: 400px; 
+}
+
+.div_password_create_account .toggle_password_create_account img {
+    width: 20px;
+    height: 20px;
+}
+  
+.div_password_create_account button {
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.div_password_create_account input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px; 
+    font-size: 16px;
+    box-sizing: border-box; /* la valeur de width inclut les padding, margin...*/
+}
+
+.div_password_create_account img {
+    width: 20px; 
+    height: auto;
+}
+
+.div_password_confirmation
+.toggle_password_confirmation {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.div_password_confirmation {
+    position: relative;
+    width: 400px; 
+}
+
+.div_password_confirmation .toggle_password_confirmation img {
+    width: 20px;
+    height: 20px;
+}
+  
+.div_password_confirmation button {
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.div_password_confirmation input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px; 
+    font-size: 16px;
+    box-sizing: border-box; /* la valeur de width inclut les padding, margin...*/
+}
+
+.div_password_confirmation img {
+    width: 20px; 
+    height: auto;
+}
+
+.btn_create_valid_account{
+    height: 40px;
+    border: 2px solid #F5F5F5;
+    border-radius: 5px;
+    color: #F5F5F5;
+    background-color: #002B5B;
+    padding: 5px;
+    font-size: large;
+    width: 100%;
+}
+
+.btn_create_valid_account:hover{
+    cursor: pointer;
+    color: #002B5B;
+    background-color: #F5F5F5;
+    border: 2px solid #002B5B;
+}
 
 
 @media screen and (min-width: 1000px) { 
@@ -107,6 +385,8 @@ button:hover{
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: baseline;
+        top: 50px; 
+
     }
     
     .li{

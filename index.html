@@ -12,15 +12,67 @@
         <nav class="nav_barre">
             <ul class="ul" >
                 <img class="img_icon_menu" src="/assets/icon_menu.png" alt="Icon menu">
-                <li class="li li_accueil" >Accueil</li>
-                <li class="li li_apropos" >A propos</li>
-                <li class="li li_contact" >Contact</li>
+                <li class="li li_accueil">Accueil</li>
+                <li class="li li_apropos">A propos</li>
+                <li class="li li_contact">Contact</li>
             </ul>
-            <button class="button_connection">Se connecter</button>
+            <button class="btn_open_login">Se connecter</button>
         </nav>
-    </header>
+    </header> 
 
-    <div class="overlay" ></div>
+    <div class="overlay_login">
+        <div class="login_modal">
+            <div class="div_btn_close_login" >
+                <button class="btn_close_login"><img src="/assets/close_cross_btn_connection.png" alt="Cross close window connection"></button>
+            </div>
+          <h2>Connexion</h2>
+          <input type="text" placeholder="Email" />
+          <div class="div_password">
+            <input type="password" placeholder="Mot de passe" />
+            <button type="button" class="toggle_password">
+              <img class="img_eyes_connection" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
+            </button>
+          </div>
+          <div class="div_checkbox" >
+            <input class="checkbox" type="checkbox"/>
+            <span>Se souvenir de moi</span>
+          </div>
+          <button class="btn_connection">Connexion</button>
+          <div class="create_account" >
+            <span>Vous n'avez pas encore de compte ?</span>
+
+            <button class="a_create_account" >Créer un compte</button>
+          </div>
+        </div>
+    </div>
+
+    <div class="overlay_create_account">
+        <div class="account_modal">
+            <div class="div_btn_close_login_create_account" >
+                <button class="btn_close_login_create_account"><img src="/assets/close_cross_btn_connection.png" alt="Cross close window connection"></button>
+            </div>
+          <h2>Nouveau compte</h2>
+          <input type="text" placeholder="Prénom">
+          <input type="text" placeholder="Nom">
+          <input type="text" placeholder="Email" />
+          <div class="div_password_create_account">
+            <input type="password" placeholder="Mot de passe" />
+            <button type="button" class="toggle_password_create_account">
+              <img class="img_eyes_create_account" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
+            </button>
+          </div>
+          <div class="div_password_confirmation">
+            <input type="password" placeholder="Confirmation mot de passe" />
+            <button type="button" class="toggle_password_confirmation">
+              <img class="img_eyes_create_account_confirmation" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
+            </button>
+          </div>
+          <div>
+            <button class="btn_create_valid_account"  >Je crée mon compte</button>
+          </div>
+        </div>
+    </div>
+      
     
     <script src="/index.js"></script>
 </body>
