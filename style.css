@@ -39,7 +39,7 @@ nav{
 }
 
 .img_icon_menu{
-    margin: 15px;
+    margin: 24px;
 }
 
 .img_icon_menu:hover{
@@ -118,7 +118,7 @@ nav{
     background: white;
     border-radius: 12px;
     width: 400px;
-    height: 350px;
+    height: 460px;
     padding: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -144,6 +144,10 @@ input {
     padding-right: 40px; 
     font-size: 16px;
     box-sizing: border-box;
+}
+
+.img_eyes{
+    z-index: 1000;
 }
   
 .div_password .toggle-password {
@@ -211,6 +215,11 @@ input {
 
 .a_create_account:hover{
     color: #002B5B;
+}
+
+.regexPassword{
+    border: 1px solid black;
+    font-size: small;
 }
 
 /* Create new account */
@@ -385,8 +394,6 @@ input {
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: baseline;
-        top: 50px; 
-
     }
     
     .li{
