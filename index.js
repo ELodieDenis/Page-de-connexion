@@ -29,9 +29,13 @@ const overlayCreateAccount = document.querySelector(".overlay_create_account");
 const closeBtnCreateAccount = document.querySelector(
   ".btn_close_login_create_account"
 );
+const regexPasswords = document.querySelectorAll(".regexPassword");
 
 aCreateAccount.addEventListener("click", (e) => {
   overlayCreateAccount.style.display = "flex";
+  regexPasswords.forEach((regexPassword) => {
+    regexPassword.style.display = "none";
+  });
 });
 
 closeBtnCreateAccount.addEventListener("click", () => {
@@ -68,6 +72,11 @@ imgEyes.forEach((imgEye) => {
 const btnsClose = document.querySelectorAll(".btn_close");
 const inputs = document.querySelectorAll(".input");
 const eyesNew = document.querySelectorAll(".eyes");
+const loginModal = document.querySelector(".login_modal");
+const verificationPasswordP = document.querySelector(
+  ".p_verification_password"
+);
+const accountModal = document.querySelector(".account_modal");
 
 btnsClose.forEach((btnClose) => {
   btnClose.addEventListener("click", () => {
@@ -79,24 +88,156 @@ btnsClose.forEach((btnClose) => {
       input.value = "";
       input.attributes.type.nodeValue = "password";
     });
+    loginModal.style.height = "350px";
+    accountModal.style.height = "480px";
+    regexPasswords.forEach((regexPassword) => {
+      regexPassword.style.display = "none";
+    });
+    verificationPasswordP.style.display = "none";
   });
 });
 
-// Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux)
+// --------------------------------------------------------------
+// Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux) dans la fenêtre de connection
 const passwordOverlay = document.querySelector(".password_input_overlay");
-console.log(passwordOverlay);
-
 const btnConnection = document.querySelector(".btn_connection");
-console.log(btnConnection);
+const inputEmailConnection = document.querySelector(".input_email_connection");
+const emailConnectionP = document.querySelector(".p_email_connection");
+
+const lowercaseTextsAll = document.querySelectorAll(".lowercase_letter");
+const uppercaseTextsAll = document.querySelectorAll(".capital_letter");
+const figureTextsAll = document.querySelectorAll(".figure");
+const spacialCharacterTextsAll =
+  document.querySelectorAll(".spacial_character");
 
 btnConnection.addEventListener("click", () => {
+  const regexEmailValid =
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+      inputEmailConnection.value
+    );
+
   const passwordValid = passwordOverlay.value;
 
   const regexPasswordValid =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(passwordValid);
+  const containsNumber = /\d/.test(passwordValid);
+  const containsLowercase = /[a-z]/.test(passwordValid);
+  const containsUppercase = /[A-Z]/.test(passwordValid);
+  const containsSpacialCaracter = /[.*+?^=!:${}()|\[\]\/\\]/.test(
+    passwordValid
+  );
+
+  lowercaseTextsAll.forEach((lowercaseTextAll) => {
+    lowercaseTextAll.style.color = containsLowercase ? "green" : "red";
+  });
+  uppercaseTextsAll.forEach((uppercaseTextAll) => {
+    uppercaseTextAll.style.color = containsUppercase ? "green" : "red";
+  });
+  figureTextsAll.forEach((figureTextAll) => {
+    figureTextAll.style.color = containsNumber ? "green" : "red";
+  });
+  spacialCharacterTextsAll.forEach((spacialCharacterTextAll) => {
+    spacialCharacterTextAll.style.color = containsSpacialCaracter
+      ? "green"
+      : "red";
+  });
+
   if (regexPasswordValid) {
     console.log("Mot de passe valide");
+    regexPasswords.forEach((regexPassword) => {
+      regexPassword.style.display = "none";
+    });
+    loginModal.style.height = "350px";
   } else {
     console.log("Mot de passe invalide");
+    regexPasswords.forEach((regexPassword) => {
+      regexPassword.style.display = "inline";
+    });
+    loginModal.style.height = "460px";
+  }
+
+  if (!regexEmailValid) {
+    console.log("email valide");
   }
 });
+
+// --------------------------------------------------------------
+// Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux) dans la fenêtre de création d'un compte
+const validCreateAccount = document.querySelector(".btn_create_valid_account");
+const inputPasswordCreateAccount = document.querySelector(
+  ".password_input_create_account"
+);
+const regexPasswordValid = document.querySelector(
+  ".regex_password_create_account"
+);
+const inputPasswordConfirmation = document.querySelector(
+  ".input_password_confirmation"
+);
+
+validCreateAccount.addEventListener("click", () => {
+  const passwordValidCreateAccount = inputPasswordCreateAccount.value;
+
+  const regexPasswordValidCreateAccount =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(
+      passwordValidCreateAccount
+    );
+  const containsNumberCreateAccount = /\d/.test(passwordValidCreateAccount);
+  const containsLowercaseCreateAccount = /[a-z]/.test(
+    passwordValidCreateAccount
+  );
+  const containsUppercaseCreateAccount = /[A-Z]/.test(
+    passwordValidCreateAccount
+  );
+  const containsSpacialCaracterCreateAccount = /[.*+?^=!:${}()|\[\]\/\\]/.test(
+    passwordValidCreateAccount
+  );
+
+  lowercaseTextsAll.forEach((lowercaseTextAll) => {
+    lowercaseTextAll.style.color = containsLowercaseCreateAccount
+      ? "green"
+      : "red";
+  });
+
+  uppercaseTextsAll.forEach((uppercaseTextAll) => {
+    uppercaseTextAll.style.color = containsUppercaseCreateAccount
+      ? "green"
+      : "red";
+  });
+
+  figureTextsAll.forEach((figureTextAll) => {
+    figureTextAll.style.color = containsNumberCreateAccount ? "green" : "red";
+  });
+
+  spacialCharacterTextsAll.forEach((spacialCharacterTextAll) => {
+    spacialCharacterTextAll.style.color = containsSpacialCaracterCreateAccount
+      ? "green"
+      : "red";
+  });
+
+  if (regexPasswordValidCreateAccount) {
+    console.log("Mot de passe valide");
+    regexPasswordValid.style.display = "none";
+    accountModal.style.height = "480px";
+  } else {
+    console.log("Mot de passe invalide");
+    regexPasswordValid.style.display = "inline";
+    accountModal.style.height = "580px";
+  }
+
+  const valueInputPassWordCreateAccount = inputPasswordCreateAccount.value;
+  const valueInputPasswordConfirmation = inputPasswordConfirmation.value;
+
+  if (valueInputPasswordConfirmation !== valueInputPassWordCreateAccount) {
+    verificationPasswordP.style.display = "inline";
+    if ((regexPasswordValid.style.display = "none")) {
+      accountModal.style.height = "500px";
+    } else {
+      accountModal.style.height = "630px";
+    }
+  } else {
+    console.log("les deux mot de passe sont identiques");
+  }
+});
+
+// --------------------------------------------------------------
+// Vérification email valide

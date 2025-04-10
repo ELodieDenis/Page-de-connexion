@@ -26,19 +26,22 @@
                 <button class="btn_close btn_close_login"><img src="/assets/close_cross_btn_connection.png" alt="Cross close window connection"></button>
             </div>
           <h2>Connexion</h2>
-          <input class="input" type="text" placeholder="Email" />
+          <div>
+            <input class="input input_email input_email_connection" type="text" placeholder="Email" />
+            <p class="p_email_connection">L'email n'est pas valide</p>
+          </div>
           <div class="champ_password div_password">
             <input class="input password password_input_overlay" type="password" placeholder="Mot de passe"/>
             <button type="button" class="img_eyes toggle_password">
               <img class="eyes img_eyes_connection" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
             </button>
           </div>
-          <div class="regexPassword">
-            <p>Le mot de passe doit obligatoirment :</p>
-            <p>Une lettre minuscule</p>
-            <p>Une lettre majuscule</p>
-            <p>Un chiffre</p>
-            <p>Un caractère spécial</p>
+          <div class="passwordRegex regexPassword">
+            <p>Le mot de passe doit obligatoirement contenir:</p>
+            <p class="lowercase_letter">Une lettre minuscule</p>
+            <p class="capital_letter">Une lettre majuscule</p>
+            <p class="figure">Un chiffre</p>
+            <p class="spacial_character">Un caractère spécial</p>
           </div>
           <div class="div_checkbox" >
             <input class="checkbox" type="checkbox"/>
@@ -60,21 +63,31 @@
           <h2>Nouveau compte</h2>
           <input class="input" type="text" placeholder="Prénom">
           <input class="input" type="text" placeholder="Nom">
-          <input class="input" type="text" placeholder="Email" />
+          <input class="input input_email input_email_create_account" type="text" placeholder="Email" />
           <div class="champ_password div_password_create_account">
-            <input class="input password" type="password" placeholder="Mot de passe" />
+            <input class="input password password_input_create_account" type="password" placeholder="Mot de passe"/>
             <button type="button" class="img_eyes toggle_password_create_account">
               <img class="eyes img_eyes_create_account" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
             </button>
           </div>
+          <div class="passwordRegex regexPassword regex_password_create_account ">
+            <p>Le mot de passe doit obligatoirement contenir:</p>
+            <p class="lowercase_letter">Une lettre minuscule</p>
+            <p class="capital_letter">Une lettre majuscule</p>
+            <p class="figure">Un chiffre</p>
+            <p class="spacial_character">Un caractère spécial</p>
+          </div>
           <div class="champ_password div_password_confirmation">
-            <input class="input password" type="password" placeholder="Confirmation mot de passe" />
+            <input class="input password input_password_confirmation" type="password" placeholder="Confirmation mot de passe" />
             <button type="button" class="img_eyes toggle_password_confirmation">
               <img class="eyes img_eyes_create_account_confirmation" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
             </button>
           </div>
+          <div class="verification_password">
+            <p class="p_verification_password">Les mots de passe doivent être identiques</p>
+          </div>
           <div>
-            <button class="btn_create_valid_account"  >Je crée mon compte</button>
+            <button class="btn_create_valid_account">Je crée mon compte</button>
           </div>
         </div>
     </div>
