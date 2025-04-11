@@ -61,11 +61,14 @@
                 <button class="btn_close btn_close_login_create_account"><img src="/assets/close_cross_btn_connection.png" alt="Cross close window connection"></button>
             </div>
           <h2>Nouveau compte</h2>
-          <input class="input" type="text" placeholder="Prénom">
-          <input class="input" type="text" placeholder="Nom">
-          <input class="input input_email input_email_create_account" type="text" placeholder="Email" />
+          <input class="input input_firstname" type="text" placeholder="Prénom *">
+          <input class="input input_surname" type="text" placeholder="Nom *">
+          <div class="div_input_email_create_account">
+            <input class="input input_email input_email_create_account" type="text" placeholder="Email *" />
+            <p class="p_email_create_account">L'email n'est pas valide</p>
+          </div>
           <div class="champ_password div_password_create_account">
-            <input class="input password password_input_create_account" type="password" placeholder="Mot de passe"/>
+            <input class="input password password_input_create_account" type="password" placeholder="Mot de passe *"/>
             <button type="button" class="img_eyes toggle_password_create_account">
               <img class="eyes img_eyes_create_account" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
             </button>
@@ -78,13 +81,14 @@
             <p class="spacial_character">Un caractère spécial</p>
           </div>
           <div class="champ_password div_password_confirmation">
-            <input class="input password input_password_confirmation" type="password" placeholder="Confirmation mot de passe" />
+            <input class="input password input_password_confirmation" type="password" placeholder="Confirmation mot de passe *" />
             <button type="button" class="img_eyes toggle_password_confirmation">
               <img class="eyes img_eyes_create_account_confirmation" src="/assets/eye_close_password.png" alt="Afficher le mot de passe" />
             </button>
           </div>
           <div class="verification_password">
             <p class="p_verification_password">Les mots de passe doivent être identiques</p>
+            <p class="p_required_field">* Ce champ est obligatoire</p>
           </div>
           <div>
             <button class="btn_create_valid_account">Je crée mon compte</button>

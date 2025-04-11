@@ -23,7 +23,7 @@ closeBtn.addEventListener("click", () => {
 });
 
 // --------------------------------------------------------------
-//  Apparition de la compte pour créer un nouveau compte
+//  Apparition du compte pour créer un nouveau compte
 const aCreateAccount = document.querySelector(".a_create_account");
 const overlayCreateAccount = document.querySelector(".overlay_create_account");
 const closeBtnCreateAccount = document.querySelector(
@@ -91,6 +91,7 @@ btnsClose.forEach((btnClose) => {
     });
     inputs.forEach((input) => {
       input.value = "";
+      input.style.border = "";
     });
     passwords.forEach((password) => {
       console.log(password);
@@ -173,6 +174,12 @@ btnConnection.addEventListener("click", () => {
     passwordRegex.style.display = "none";
     loginModal.style.height = "350px";
   }
+
+  inputs.forEach((input) => {
+    if (!input.value) {
+      input.style.border = "1px solid red";
+    }
+  });
 });
 
 // --------------------------------------------------------------
@@ -187,9 +194,24 @@ const regexPasswordValid = document.querySelector(
 const inputPasswordConfirmation = document.querySelector(
   ".input_password_confirmation"
 );
+const pRequiredField = document.querySelector(".p_required_field");
+const inputEmailCreateAccount = document.querySelector(
+  ".input_email_create_account"
+);
+const pEmailCreateAccount = document.querySelector(".p_email_create_account");
+
+const firstname = document.querySelector(".input_firstname");
+console.log(firstname);
+const surname = document.querySelector(".input_surname");
+console.log(surname);
 
 validCreateAccount.addEventListener("click", () => {
   const passwordValidCreateAccount = inputPasswordCreateAccount.value;
+
+  const regexEmailValidCreateAccount =
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+      inputEmailCreateAccount.value
+    );
 
   const regexPasswordValidCreateAccount =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(
@@ -211,36 +233,37 @@ validCreateAccount.addEventListener("click", () => {
       ? "green"
       : "red";
   });
-
   uppercaseTextsAll.forEach((uppercaseTextAll) => {
     uppercaseTextAll.style.color = containsUppercaseCreateAccount
       ? "green"
       : "red";
   });
-
   figureTextsAll.forEach((figureTextAll) => {
     figureTextAll.style.color = containsNumberCreateAccount ? "green" : "red";
   });
-
   spacialCharacterTextsAll.forEach((spacialCharacterTextAll) => {
     spacialCharacterTextAll.style.color = containsSpacialCaracterCreateAccount
       ? "green"
       : "red";
   });
 
-  if (regexPasswordValidCreateAccount) {
-    console.log("Mot de passe valide");
-    regexPasswordValid.style.display = "none";
-    accountModal.style.height = "480px";
-  } else {
-    console.log("Mot de passe invalide");
-    regexPasswordValid.style.display = "inline";
-    accountModal.style.height = "580px";
-  }
+  // if (regexPasswordValidCreateAccount) {
+  //   console.log("Mot de passe valide");
+  //   regexPasswordValid.style.display = "none";
+  //   accountModal.style.height = "480px";
+  // } else {
+  //   console.log("Mot de passe invalide");
+  //   regexPasswordValid.style.display = "inline";
+  //   accountModal.style.height = "580px";
+  // }
 
   const valueInputPassWordCreateAccount = inputPasswordCreateAccount.value;
   const valueInputPasswordConfirmation = inputPasswordConfirmation.value;
+  const passwordsValidCreateAccount =
+    valueInputPassWordCreateAccount === valueInputPasswordConfirmation;
+  console.log(passwordsValidCreateAccount);
 
+  // vérifier si les deux mots de passe entré en create account sont identiques
   if (valueInputPasswordConfirmation !== valueInputPassWordCreateAccount) {
     verificationPasswordP.style.display = "inline";
     if ((regexPasswordValid.style.display = "none")) {
@@ -250,6 +273,31 @@ validCreateAccount.addEventListener("click", () => {
     }
   } else {
     console.log("les deux mot de passe sont identiques");
+  }
+
+  //changer couleur border input si non rempli AJOUTER SI MP NON VALID ET EMAIL NON VALIDENT
+  inputs.forEach((input) => {
+    if (!input.value) {
+      input.style.border = "1px solid red";
+      pRequiredField.style.color = "red";
+    }
+  });
+
+  // email non valide create account mais mp et mpconfirmation valident
+  if (!regexEmailValidCreateAccount && passwordsValidCreateAccount) {
+    pEmailCreateAccount.style.display = "inline";
+    console.log("email non valid, mais mp et mpvalid validé");
+    // email + mp + mp confirmation create account non valident
+  } else if (!regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
+    pEmailCreateAccount.style.display = "inline";
+    regexPasswordValid.style.display = "inline";
+    inputPasswordCreateAccount.style.border = "1px solid red";
+    console.log("email + mp + mp confirmation non valident");
+    // email valide mais mp non conforme
+  } else if (regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
+    regexPasswordValid.style.display = "inline";
+    inputPasswordCreateAccount.style.border = "1px solid red";
+    console.log("email valident mais mp non conforme");
   }
 });
 

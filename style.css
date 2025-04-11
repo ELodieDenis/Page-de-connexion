@@ -273,7 +273,7 @@ input:not(.checkbox) {
     background: white;
     border-radius: 12px;
     width: 400px;
-    height: 480px;
+    height: 500px;
     padding: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -281,6 +281,12 @@ input:not(.checkbox) {
     justify-content: top;
     align-items: stretch;
     gap: 1rem;
+}
+
+.p_email_create_account{
+    display: none;
+    font-size: small;
+    color: red;
 }
 
 .div_password_create_account
@@ -399,6 +405,12 @@ input:not(.checkbox) {
     display: none;
     color: red;
     font-size: small;
+}
+
+.p_required_field{
+    /* display: none; */
+    font-size: small;
+    color: #757575;
 }
 
 
