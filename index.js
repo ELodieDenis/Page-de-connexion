@@ -46,24 +46,28 @@ closeBtnCreateAccount.addEventListener("click", () => {
 // --------------------------------------------------------------
 // Changer l'image de l'oeil au clique sur ce dernier en fonction du type de l'input
 const passwords = document.querySelectorAll(".password");
+console.log(passwords);
+const passwordInputOverlay = document.querySelector(".password_input_overlay");
 const imgEyes = document.querySelectorAll(".img_eyes");
+console.log(imgEyes[0]);
+console.log(imgEyes[0].children[0].attributes.src.nodeValue);
+
+const inputEmailConnection = document.querySelector(".input_email_connection");
 
 imgEyes.forEach((imgEye) => {
   imgEye.addEventListener("click", () => {
-    const eyes = imgEye.querySelector("img");
-    const container = imgEye.closest(".champ_password");
+    const parentInputPassword = imgEye.closest(".champ_password"); // récuprérer le parent de mon élément
 
-    const passwordNew = container.querySelector(".password");
+    const siblingParent = parentInputPassword.firstElementChild; // récuprérer le premier enfant du parent de mon élément oeil
 
-    if (passwordNew.type === "password") {
-      passwordNew.type = "text";
-      eyes.src = "/assets/eye_open_password.png";
-      eyes.alt = "Masquer le mot de passe";
-    } else {
-      passwordNew.type = "password";
-      eyes.src = "/assets/eye_close_password.png";
-      eyes.alt = "Afficher le mot de passe";
-    }
+    imgEye.children[0].attributes.src.nodeValue =
+      imgEye.children[0].attributes.src.nodeValue ===
+      "/assets/eye_close_password.png"
+        ? "/assets/eye_open_password.png"
+        : "/assets/eye_close_password.png";
+
+    siblingParent.type =
+      siblingParent.type === "password" ? "text" : "password";
   });
 });
 
@@ -77,6 +81,7 @@ const verificationPasswordP = document.querySelector(
   ".p_verification_password"
 );
 const accountModal = document.querySelector(".account_modal");
+const emailConnectionP = document.querySelector(".p_email_connection");
 
 btnsClose.forEach((btnClose) => {
   btnClose.addEventListener("click", () => {
@@ -86,7 +91,15 @@ btnsClose.forEach((btnClose) => {
     });
     inputs.forEach((input) => {
       input.value = "";
-      input.attributes.type.nodeValue = "password";
+    });
+    passwords.forEach((password) => {
+      console.log(password);
+      console.log(password.attributes);
+      console.log(password.attributes.type);
+      console.log(password.attributes.type.nodeValue);
+
+      password.value = "";
+      password.attributes.type.nodeValue = "password";
     });
     loginModal.style.height = "350px";
     accountModal.style.height = "480px";
@@ -94,6 +107,7 @@ btnsClose.forEach((btnClose) => {
       regexPassword.style.display = "none";
     });
     verificationPasswordP.style.display = "none";
+    emailConnectionP.style.display = "none";
   });
 });
 
@@ -101,8 +115,7 @@ btnsClose.forEach((btnClose) => {
 // Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux) dans la fenêtre de connection
 const passwordOverlay = document.querySelector(".password_input_overlay");
 const btnConnection = document.querySelector(".btn_connection");
-const inputEmailConnection = document.querySelector(".input_email_connection");
-const emailConnectionP = document.querySelector(".p_email_connection");
+const passwordRegex = document.querySelector(".passwordRegex");
 
 const lowercaseTextsAll = document.querySelectorAll(".lowercase_letter");
 const uppercaseTextsAll = document.querySelectorAll(".capital_letter");
@@ -142,22 +155,23 @@ btnConnection.addEventListener("click", () => {
       : "red";
   });
 
-  if (regexPasswordValid) {
-    console.log("Mot de passe valide");
-    regexPasswords.forEach((regexPassword) => {
-      regexPassword.style.display = "none";
-    });
-    loginModal.style.height = "350px";
+  if (regexPasswordValid && !regexEmailValid) {
+    console.log("email non valide, mp valide");
+    emailConnectionP.style.display = "inline";
+    loginModal.style.height = "375px";
+  } else if (!regexPasswordValid && regexEmailValid) {
+    console.log("email valide, mp non valide");
+    passwordRegex.style.display = "inline";
+    loginModal.style.height = "465px";
+  } else if (!regexPasswordValid && !regexEmailValid) {
+    console.log("email et mp non valident");
+    emailConnectionP.style.display = "inline";
+    passwordRegex.style.display = "inline";
+    loginModal.style.height = "490px";
   } else {
-    console.log("Mot de passe invalide");
-    regexPasswords.forEach((regexPassword) => {
-      regexPassword.style.display = "inline";
-    });
-    loginModal.style.height = "460px";
-  }
-
-  if (!regexEmailValid) {
-    console.log("email valide");
+    console.log("email et mp valident");
+    passwordRegex.style.display = "none";
+    loginModal.style.height = "350px";
   }
 });
 
@@ -240,4 +254,3 @@ validCreateAccount.addEventListener("click", () => {
 });
 
 // --------------------------------------------------------------
-// Vérification email valide
