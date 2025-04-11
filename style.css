@@ -227,6 +227,8 @@ input:not(.checkbox) {
 
 .p_email_connection{
     display: none;
+    font-size: small;
+    color: red;
 }
 
 /* Create new account */

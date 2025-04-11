@@ -162,13 +162,10 @@ btnConnection.addEventListener("click", () => {
     loginModal.style.height = "375px";
   } else if (!regexPasswordValid && regexEmailValid) {
     console.log("email valide, mp non valide");
-    passwordRegex.style.display = "inline";
-    loginModal.style.height = "465px";
   } else if (!regexPasswordValid && !regexEmailValid) {
     console.log("email et mp non valident");
     emailConnectionP.style.display = "inline";
-    passwordRegex.style.display = "inline";
-    loginModal.style.height = "490px";
+    loginModal.style.height = "365px";
   } else {
     console.log("email et mp valident");
     passwordRegex.style.display = "none";
@@ -247,23 +244,13 @@ validCreateAccount.addEventListener("click", () => {
       : "red";
   });
 
-  // if (regexPasswordValidCreateAccount) {
-  //   console.log("Mot de passe valide");
-  //   regexPasswordValid.style.display = "none";
-  //   accountModal.style.height = "480px";
-  // } else {
-  //   console.log("Mot de passe invalide");
-  //   regexPasswordValid.style.display = "inline";
-  //   accountModal.style.height = "580px";
-  // }
-
   const valueInputPassWordCreateAccount = inputPasswordCreateAccount.value;
   const valueInputPasswordConfirmation = inputPasswordConfirmation.value;
   const passwordsValidCreateAccount =
     valueInputPassWordCreateAccount === valueInputPasswordConfirmation;
   console.log(passwordsValidCreateAccount);
 
-  // vérifier si les deux mots de passe entré en create account sont identiques
+  // vérifier si les deux mots de passe entrés en create account sont identiques
   if (valueInputPasswordConfirmation !== valueInputPassWordCreateAccount) {
     verificationPasswordP.style.display = "inline";
     if ((regexPasswordValid.style.display = "none")) {
@@ -286,12 +273,16 @@ validCreateAccount.addEventListener("click", () => {
   // email non valide create account mais mp et mpconfirmation valident
   if (!regexEmailValidCreateAccount && passwordsValidCreateAccount) {
     pEmailCreateAccount.style.display = "inline";
+    inputEmailCreateAccount.style.border = "1px solid red";
+
     console.log("email non valid, mais mp et mpvalid validé");
     // email + mp + mp confirmation create account non valident
   } else if (!regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
     pEmailCreateAccount.style.display = "inline";
     regexPasswordValid.style.display = "inline";
     inputPasswordCreateAccount.style.border = "1px solid red";
+    inputEmailCreateAccount.style.border = "1px solid red";
+
     console.log("email + mp + mp confirmation non valident");
     // email valide mais mp non conforme
   } else if (regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
