@@ -79,6 +79,8 @@ const verificationPasswordP = document.querySelector(
 );
 const accountModal = document.querySelector(".account_modal");
 const emailConnectionP = document.querySelector(".p_email_connection");
+const pEmailCreateAccount = document.querySelector(".p_email_create_account");
+const pRequiredField = document.querySelector(".p_required_field");
 
 btnsClose.forEach((btnClose) => {
   btnClose.addEventListener("click", () => {
@@ -91,11 +93,6 @@ btnsClose.forEach((btnClose) => {
       input.style.border = "";
     });
     passwords.forEach((password) => {
-      console.log(password);
-      console.log(password.attributes);
-      console.log(password.attributes.type);
-      console.log(password.attributes.type.nodeValue);
-
       password.value = "";
       password.attributes.type.nodeValue = "password";
     });
@@ -111,201 +108,237 @@ btnsClose.forEach((btnClose) => {
   });
 });
 
-// --------------------------------------------------------------
-// Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux) dans la fenêtre de connection
+// -----------------------------------------------------------------------
+//  Gestion bouton de connectionavec mp et email
 const passwordOverlay = document.querySelector(".password_input_overlay");
 const btnConnection = document.querySelector(".btn_connection");
 const passwordRegex = document.querySelector(".passwordRegex");
+const inputOverlay = document.querySelectorAll(".input_overlay");
 
-const lowercaseTextsAll = document.querySelectorAll(".lowercase_letter");
-const uppercaseTextsAll = document.querySelectorAll(".capital_letter");
-const figureTextsAll = document.querySelectorAll(".figure");
-const spacialCharacterTextsAll =
-  document.querySelectorAll(".spacial_character");
+// Groupes de conditions
+const ruleGroups = {
+  lowercase: {
+    elements: document.querySelectorAll(".lowercase_letter"),
+    regex: /[a-z]/,
+  },
+  uppercase: {
+    elements: document.querySelectorAll(".capital_letter"),
+    regex: /[A-Z]/,
+  },
+  number: {
+    elements: document.querySelectorAll(".figure"),
+    regex: /\d/,
+  },
+  specialChar: {
+    elements: document.querySelectorAll(".spacial_character"),
+    regex: /[\W_]/, // \W capture tout ce qui n'est pas alphanumérique
+  },
+};
+
+// Validation de l'email
+const isEmailValid = (email) =>
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+
+// Validation du mot de passe global
+const isPasswordStrong = (password) =>
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(password);
+
+// Colorer les règles
+const updatePasswordRulesDisplay = (password) => {
+  for (const key in ruleGroups) {
+    const { elements, regex } = ruleGroups[key];
+    const isValid = regex.test(password);
+    elements.forEach((el) => {
+      el.style.color = isValid ? "green" : "red";
+    });
+  }
+};
+
+// Gérer les bordures vides
+const highlightEmptyInputs = () => {
+  inputs.forEach((input) => {
+    input.style.border = input.value ? "" : "1px solid red";
+  });
+};
 
 btnConnection.addEventListener("click", () => {
-  const regexEmailValid =
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-      inputEmailConnection.value
-    );
+  const email = inputEmailConnection.value;
+  const password = passwordOverlay.value;
 
-  const passwordValid = passwordOverlay.value;
+  const emailValid = isEmailValid(email);
+  const passwordValid = isPasswordStrong(password);
 
-  const regexPasswordValid =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(passwordValid);
-  const containsNumber = /\d/.test(passwordValid);
-  const containsLowercase = /[a-z]/.test(passwordValid);
-  const containsUppercase = /[A-Z]/.test(passwordValid);
-  const containsSpacialCaracter = /[.*+?^=!:${}()|\[\]\/\\]/.test(
-    passwordValid
-  );
+  updatePasswordRulesDisplay(password);
+  highlightEmptyInputs();
 
-  lowercaseTextsAll.forEach((lowercaseTextAll) => {
-    lowercaseTextAll.style.color = containsLowercase ? "green" : "red";
-  });
-  uppercaseTextsAll.forEach((uppercaseTextAll) => {
-    uppercaseTextAll.style.color = containsUppercase ? "green" : "red";
-  });
-  figureTextsAll.forEach((figureTextAll) => {
-    figureTextAll.style.color = containsNumber ? "green" : "red";
-  });
-  spacialCharacterTextsAll.forEach((spacialCharacterTextAll) => {
-    spacialCharacterTextAll.style.color = containsSpacialCaracter
-      ? "green"
-      : "red";
-  });
-
-  if (regexPasswordValid && !regexEmailValid) {
+  if (!emailValid && passwordValid) {
     console.log("email non valide, mp valide");
     emailConnectionP.style.display = "inline";
-    loginModal.style.height = "375px";
-  } else if (!regexPasswordValid && regexEmailValid) {
-    console.log("email valide, mp non valide");
-    inputEmailConnection.style.border = "";
-    emailConnectionP.style.display = "none";
-    passwordRegex.style.display = "inline";
-    loginModal.style.height = "460px";
-  } else if (!regexPasswordValid && !regexEmailValid) {
-    console.log("email et mp non valident");
-    passwordRegex.style.display = "inline";
     inputEmailConnection.style.border = "1px solid red";
+    passwordRegex.style.display = "none";
+    loginModal.style.height = "375px";
+  } else if (emailValid && !passwordValid) {
+    console.log("email valide, mp non valide");
+    emailConnectionP.style.display = "none";
+    inputEmailConnection.style.border = "";
+    passwordRegex.style.display = "inline";
+    passwordOverlay.style.border = "1px solid red";
+    loginModal.style.height = "460px";
+  } else if (!emailValid && !passwordValid) {
+    console.log("email et mp non valident");
     emailConnectionP.style.display = "inline";
+    inputEmailConnection.style.border = "1px solid red";
+    passwordOverlay.style.border = "1px solid red";
+
+    passwordRegex.style.display = "inline";
     loginModal.style.height = "480px";
   } else {
     console.log("email et mp valident");
+    emailConnectionP.style.display = "none";
     passwordRegex.style.display = "none";
+    inputEmailConnection.style.border = "";
     loginModal.style.height = "350px";
-  }
-
-  inputs.forEach((input) => {
-    if (!input.value) {
-      input.style.border = "1px solid red";
-    }
-  });
-});
-
-// --------------------------------------------------------------
-// Ajouter les conditions obligatoires pour les mot de passe (majsucule, minuscule, chiffre, caractères spéciaux) dans la fenêtre de création d'un compte
-const validCreateAccount = document.querySelector(".btn_create_valid_account");
-const inputPasswordCreateAccount = document.querySelector(
-  ".password_input_create_account"
-);
-const regexPasswordValid = document.querySelector(
-  ".regex_password_create_account"
-);
-const inputPasswordConfirmation = document.querySelector(
-  ".input_password_confirmation"
-);
-const pRequiredField = document.querySelector(".p_required_field");
-const inputEmailCreateAccount = document.querySelector(
-  ".input_email_create_account"
-);
-const pEmailCreateAccount = document.querySelector(".p_email_create_account");
-
-const firstname = document.querySelector(".input_firstname");
-const surname = document.querySelector(".input_surname");
-
-validCreateAccount.addEventListener("click", () => {
-  const passwordValidCreateAccount = inputPasswordCreateAccount.value;
-
-  const regexEmailValidCreateAccount =
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-      inputEmailCreateAccount.value
-    );
-
-  const regexPasswordValidCreateAccount =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(
-      passwordValidCreateAccount
-    );
-  const containsNumberCreateAccount = /\d/.test(passwordValidCreateAccount);
-  const containsLowercaseCreateAccount = /[a-z]/.test(
-    passwordValidCreateAccount
-  );
-  const containsUppercaseCreateAccount = /[A-Z]/.test(
-    passwordValidCreateAccount
-  );
-  const containsSpacialCaracterCreateAccount = /[.*+?^=!:${}()|\[\]\/\\]/.test(
-    passwordValidCreateAccount
-  );
-
-  lowercaseTextsAll.forEach((lowercaseTextAll) => {
-    lowercaseTextAll.style.color = containsLowercaseCreateAccount
-      ? "green"
-      : "red";
-  });
-  uppercaseTextsAll.forEach((uppercaseTextAll) => {
-    uppercaseTextAll.style.color = containsUppercaseCreateAccount
-      ? "green"
-      : "red";
-  });
-  figureTextsAll.forEach((figureTextAll) => {
-    figureTextAll.style.color = containsNumberCreateAccount ? "green" : "red";
-  });
-  spacialCharacterTextsAll.forEach((spacialCharacterTextAll) => {
-    spacialCharacterTextAll.style.color = containsSpacialCaracterCreateAccount
-      ? "green"
-      : "red";
-  });
-
-  const valueInputPassWordCreateAccount = inputPasswordCreateAccount.value;
-  const valueInputPasswordConfirmation = inputPasswordConfirmation.value;
-  const passwordsValidCreateAccount =
-    valueInputPassWordCreateAccount &&
-    valueInputPasswordConfirmation &&
-    valueInputPassWordCreateAccount === valueInputPasswordConfirmation &&
-    regexPasswordValidCreateAccount;
-  console.log(passwordsValidCreateAccount);
-
-  // vérifier si les deux mots de passe entrés en create account sont identiques
-  if (valueInputPasswordConfirmation !== valueInputPassWordCreateAccount) {
-    verificationPasswordP.style.display = "inline";
-    if ((regexPasswordValid.style.display = "none")) {
-      accountModal.style.height = "500px";
-    } else {
-      accountModal.style.height = "651px";
-    }
-  }
-
-  //changer couleur border input si non rempli AJOUTER SI MP NON VALID ET EMAIL NON VALIDENT
-  inputs.forEach((input) => {
-    if (!input.value) {
-      input.style.border = "1px solid red";
-      pRequiredField.style.color = "red";
-    }
-  });
-
-  // email non valide create account mais mp et mpconfirmation valident
-  if (!regexEmailValidCreateAccount && passwordsValidCreateAccount) {
-    accountModal.style.height = "515px";
-    pEmailCreateAccount.style.display = "inline";
-    inputEmailCreateAccount.style.border = "1px solid red";
-    console.log("email non valid, mais mp et mpvalid validé");
-    // email + mp + mp confirmation create account non valident
-  } else if (!regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
-    if (valueInputPassWordCreateAccount !== valueInputPasswordConfirmation) {
-      console.log("mots de passe non identiques");
-      regexPasswordValid.style.display = "inline";
-      inputPasswordCreateAccount.style.border = "1px solid red";
-      inputEmailCreateAccount.style.border = "1px solid red";
-      accountModal.style.height = "660px";
-    } else {
-      pEmailCreateAccount.style.display = "inline";
-      regexPasswordValid.style.display = "inline";
-      inputPasswordCreateAccount.style.border = "1px solid red";
-      inputEmailCreateAccount.style.border = "1px solid red";
-      console.log("email + mp + mp confirmation non valident");
-      accountModal.style.height = "635px";
-    }
-    // email valide mais mp non conforme
-  } else if (regexEmailValidCreateAccount && !passwordsValidCreateAccount) {
-    pEmailCreateAccount.style.display = "none";
-    inputEmailCreateAccount.style.border = "";
-    regexPasswordValid.style.display = "inline";
-    inputPasswordCreateAccount.style.border = "1px solid red";
-    console.log("email valident mais mp non conforme");
-    accountModal.style.height = "610px";
+    console.log("Connection réussi !");
+    alert("Connection réussi");
   }
 });
 
 // --------------------------------------------------------------
-//  dans create account passerle border en "" si valeur rentrée
+// Gestion bouton créer un compte avec les mp, email, et nom et prénom
+// Sélection des éléments HTML
+const elements = {
+  btnValidate: document.querySelector(".btn_create_valid_account"),
+  inputPassword: document.querySelector(".password_input_create_account"),
+  regexPasswordHint: document.querySelector(".regex_password_create_account"),
+  inputPasswordConfirm: document.querySelector(".input_password_confirmation"),
+  inputEmail: document.querySelector(".input_email_create_account"),
+  emailHint: document.querySelector(".p_email_create_account"),
+  requiredFieldHint: document.querySelector(".p_required_field"),
+  firstname: document.querySelector(".input_firstname"),
+  surname: document.querySelector(".input_surname"),
+  accountModal: document.querySelector(".account_modal"),
+  verificationPasswordP: document.querySelector(".p_password_verification"),
+};
+
+// Fonctions utilitaires
+function setBorder(el, valid) {
+  el.style.border = valid ? "" : "1px solid red";
+}
+
+function showElement(el) {
+  if (el) el.style.display = "inline";
+}
+
+function hideElement(el) {
+  if (el) el.style.display = "none";
+}
+
+function isNotEmpty(el) {
+  return el && el.value.trim() !== "";
+}
+
+function validatePassword(password) {
+  return {
+    isValid: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasUppercase: /[A-Z]/.test(password),
+    hasNumber: /\d/.test(password),
+    hasSpecial: /[.*+?^=!:${}()|\[\]\/\\]/.test(password),
+  };
+}
+
+function updatePasswordIndicators(checks) {
+  lowercaseTextsAll.forEach(
+    (el) => (el.style.color = checks.hasLowercase ? "green" : "red")
+  );
+  uppercaseTextsAll.forEach(
+    (el) => (el.style.color = checks.hasUppercase ? "green" : "red")
+  );
+  figureTextsAll.forEach(
+    (el) => (el.style.color = checks.hasNumber ? "green" : "red")
+  );
+  spacialCharacterTextsAll.forEach(
+    (el) => (el.style.color = checks.hasSpecial ? "green" : "red")
+  );
+}
+
+// Validation du formulaire
+elements.btnValidate.addEventListener("click", () => {
+  const {
+    firstname,
+    surname,
+    inputEmail,
+    inputPassword,
+    inputPasswordConfirm,
+    emailHint,
+    regexPasswordHint,
+    requiredFieldHint,
+    verificationPasswordP,
+    accountModal,
+  } = elements;
+
+  const password = inputPassword.value;
+  const passwordConfirm = inputPasswordConfirm.value;
+  const email = inputEmail.value;
+
+  const passwordCheck = validatePassword(password);
+  const emailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+    email
+  );
+
+  // Mise à jour des couleurs d’indicateurs de mot de passe
+  updatePasswordIndicators(passwordCheck);
+
+  // Vérification des champs obligatoires
+  const fieldsToCheck = [
+    firstname,
+    surname,
+    inputEmail,
+    inputPassword,
+    inputPasswordConfirm,
+  ];
+  fieldsToCheck.forEach((input) => setBorder(input, isNotEmpty(input)));
+
+  if (!isNotEmpty(firstname) || !isNotEmpty(surname)) {
+    requiredFieldHint.style.color = "red";
+  }
+
+  // Vérification du mot de passe
+  if (!passwordCheck.isValid) {
+    showElement(regexPasswordHint);
+    setBorder(inputPassword, false);
+    if (accountModal) accountModal.style.height = "500px";
+  } else {
+    hideElement(regexPasswordHint);
+  }
+
+  // Vérification de la confirmation du mot de passe
+  if (password !== passwordConfirm) {
+    showElement(verificationPasswordP);
+    if (accountModal) accountModal.style.height = "500px";
+    setBorder(inputPasswordConfirm, false);
+  } else {
+    hideElement(verificationPasswordP);
+  }
+
+  // Vérification de l’email
+  if (!emailValid) {
+    showElement(emailHint);
+    setBorder(inputEmail, false);
+  } else {
+    hideElement(emailHint);
+  }
+
+  // Si tout est bon
+  if (
+    isNotEmpty(firstname) &&
+    isNotEmpty(surname) &&
+    passwordCheck.isValid &&
+    password === passwordConfirm &&
+    emailValid
+  ) {
+    console.log("Formulaire valide !");
+    alert("Formulaire valide");
+    pRequiredField.style.color = "#cccccc";
+  }
+});
