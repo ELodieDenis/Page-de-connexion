@@ -274,7 +274,7 @@ input:not(.checkbox) {
 .account_modal {
     background: white;
     border-radius: 12px;
-    /* width: 400px; */
+    width: 400px;
     height: auto;
     max-height: 100vh;
     overflow-y: auto;
@@ -418,6 +418,20 @@ input:not(.checkbox) {
     color: red;
 }
 
+@media screen and (max-width : 450px) {
+    .login_modal,
+    .div_password,
+    .account_modal,
+    .div_password_create_account,
+    .div_password_confirmation{
+        width: 285px;
+    }
+
+    .login_modal{
+        height: 370px;
+    }
+}
+
 
 @media screen and (min-width: 1000px) { 
     .img_icon_menu{
@@ -446,3 +460,4 @@ input:not(.checkbox) {
         order: 1;
     }
 }
+

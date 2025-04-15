@@ -96,7 +96,7 @@ btnsClose.forEach((btnClose) => {
       password.value = "";
       password.attributes.type.nodeValue = "password";
     });
-    loginModal.style.height = "350px";
+    loginModal.style.height = "370px";
     accountModal.style.height = "500px";
     regexPasswords.forEach((regexPassword) => {
       regexPassword.style.display = "none";
@@ -248,16 +248,16 @@ function validatePassword(password) {
 }
 
 function updatePasswordIndicators(checks) {
-  lowercaseTextsAll.forEach(
+  ruleGroups.lowercase.elements.forEach(
     (el) => (el.style.color = checks.hasLowercase ? "green" : "red")
   );
-  uppercaseTextsAll.forEach(
+  ruleGroups.uppercase.elements.forEach(
     (el) => (el.style.color = checks.hasUppercase ? "green" : "red")
   );
-  figureTextsAll.forEach(
+  ruleGroups.number.elements.forEach(
     (el) => (el.style.color = checks.hasNumber ? "green" : "red")
   );
-  spacialCharacterTextsAll.forEach(
+  ruleGroups.specialChar.elements.forEach(
     (el) => (el.style.color = checks.hasSpecial ? "green" : "red")
   );
 }
